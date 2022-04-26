@@ -1,0 +1,329 @@
+/* For mobile phones: */
+
+/* Variable declaration */
+/* Border box declaration */
+
+html {
+  @maintitle box-sizing: border-box;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-right: 0 !important;
+  overflow: hidden;
+  --first-font: "Permanent Marker", cursive;
+  --color1: #eee;
+  --color2: #222;
+  --color3: #ffd959;
+  --color4: #725c40;
+}
+
+/* inherit border-box on all elements in the universe and before and after */
+*,
+*:before,
+maintit *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background: var(--color1);
+  background-size: 64px 128px;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.App {
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: 1;
+  /* grid-template-rows: 20vmax 75vmax 5vmax; */
+}
+
+.corner {
+  display: none;
+}
+
+.app-header {
+  background-color: var(--color2);
+  font-size: 1rem;
+  grid-column: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-title-container {
+  grid-column: 3;
+  /* margin: 0vmax 0em 0vmax 0vmax;
+  padding: 0vmax 1vmax; */
+  align-self: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color3);
+  background: #222;
+}
+
+.app-title {
+  /* margin: 0.5vmax 0rem 0.5vmax 0.5vmax; */
+  letter-spacing: 1rem;
+  font-size: 4rem;
+  line-height: 56px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+#scrabble {
+  justify-self: start;
+  margin: 5px 5px 5px 5px;
+  text-align: center;
+  display: none;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  grid-column-start: 3;
+  grid-column-end: end;
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  user-select: none;
+}
+
+.board-border {
+  position: relative;
+  background: var(--color3);
+  width: 560px;
+  height: 560px;
+  padding: 10px;
+  margin-top: 26px;
+  border-top: 5px solid #444;
+  border-right: 5px solid #222;
+  border-bottom: 5px solid #222;
+  border-left: 5px solid #333;
+}
+
+.board-square {
+  position: relative;
+  background-color: #222;
+  width: 56px;
+  height: 56px;
+  box-shadow: inset 0px 0px 0px 1px #ebebeb 
+  /* border-top: 1px solid rgb(255, 255, 255);
+  border-right: 1px solid rgb(255, 255, 255);
+  border-bottom: 1px solid rgb(255, 255, 255);
+  border-left: 1px solid rgb(255, 255, 255); */
+}
+
+.scoreboard {
+  display: flex;
+  flex-wrap: wrap;
+  user-select: none;
+  text-align: center;
+  align-self: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.scoreboard-border {
+  position: relative;
+  background: var(--color3);
+  width: 200px;
+  height: 300px;
+  padding: 10px;
+  margin-top: 26px;
+  border-top: 5px solid #444;
+  border-right: 5px solid #222;
+  border-bottom: 5px solid #222;
+  border-left: 5px solid #333;
+}
+
+.tile-bench {
+  display: flex;
+  flex-wrap: wrap;
+  user-select: none;
+}
+
+.tile-bench-border {
+  position: relative;
+  background: var(--color3);
+  width: 672px;
+  height: 56px;
+  padding: 10px;
+  border-top: 5px solid #444;
+  border-right: 5px solid #222;
+  border-bottom: 5px solid #222;
+  border-left: 5px solid #333;
+}
+
+.tile-bench-square {
+  position: relative;
+  background-color: #222;
+  width: 56px;
+  height: 56px;
+}
+
+.dragged-over {
+  background: rgb(87, 155, 87);
+}
+
+.cant-drop {
+  background: rgb(214, 79, 56);
+}
+
+.tile {
+  position: absolute;
+  z-index: 0;
+  width: 56px;
+  height: 56px;
+  background: rgb(235, 165, 85);
+  cursor: move;
+  border-radius: 1px;
+  border-color: white;
+  /* box-shadow: 0.5px 0.5px 0 #bda259, 1px 1px 0 #bda259, 1.5px 1.5px 0 #bda259,
+    2px 2px 0 #bda259, 2.5px 2.5px 0 #bda259, 3px 3px 0 #bda259; */
+}
+
+.is-dragging {
+  opacity: 0.7;
+}
+
+.is-established {
+  background: yellow;
+}
+
+.draggable {
+  cursor: move;
+}
+
+.tile-letter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #222;
+  font-size: 2.5rem;
+  line-height: 56px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.tile-points {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 5px;
+  height: 5px;
+  line-height: 5px;
+  text-align: center;
+  font-size: 1.25rem;
+  color: #222;
+}
+
+.controls {
+  position: relative;
+  margin: 1rem auto;
+  text-align: center;
+  margin-bottom: 2vmax;
+}
+
+
+.footer {
+  grid-column: 1 / span 5;
+  display: grid;
+  align-items: center;
+}
+
+button {
+  padding: 5px;
+  transition: 0.25s ease-in-out;
+  background: #ffd959;
+  color: #222;
+  border-width: 0;
+  margin: 10px 10px 10px 10px;
+  cursor: pointer;
+  box-shadow: 0.5px 0.5px 0 #bda259, 1px 1px 0 #bda259, 1.5px 1.5px 0 #bda259,
+    2px 2px 0 #bda259, 2.5px 2.5px 0 #bda259, 3px 3px 0 #bda259;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button:hover {
+  transform: scale(1.25);
+  transition: 0.25s ease-in-out;
+}
+
+hr {
+  margin-top: 1vmax;
+  margin-bottom: 1vmax;
+}
+
+
+@media only screen and (min-width: 600px) {
+  /* For desktop: */
+  .App {
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 20vmin 75vmin 5vmin;
+  }
+
+  .corner {
+    display: inline;
+  }
+
+  .app-header {
+    background-color: var(--color2);
+    font-size: 1rem;
+    grid-column: 1 / span 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-title-container {
+    grid-column: 3;
+    margin: 1vmax -1.2em 1vmax 2vmax;
+    padding: 0vmax 1vmax;
+    align-self: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color3);
+    background: #222;
+  }
+
+  .app-title {
+    margin: 0.5vmax -2rem 0.5vmax 0.5vmax;
+    letter-spacing: 3rem;
+    font-size: 4rem;
+    line-height: 56px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  #scrabble {
+    display: block;
+  }
+}
