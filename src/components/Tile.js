@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { ItemTypes } from '../constants'
 import { useDrag, useDrop } from 'react-dnd'
 import { swapTile } from "../GameState";
+import { Box } from "@mui/material";
+import Typography from '@mui/material/Typography';
 
-const SQUARE_SIZE = 56;
-const TILE_OFFSET = -10;
+const SQUARE_SIZE = 70;
 
 const Tile = (props) => {
 
@@ -21,29 +22,38 @@ const Tile = (props) => {
     const [{ isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.TILE,
         drop: (item, monitor) => {
-          console.log("in tile drop", item, props.id)
           swapTile(item.id, props.id)
-          //console.log(item)
-          //return {x: x, y: y}
         },
-        //drop: p => {return {x: props.x, y: props.y} },
         collect: monitor => ({
           isOver: !!monitor.isOver(),
         }),
       }), [props.x, props.y])
 
-    let x = props.x
-    let y = props.y
-    const styles = {
-      left: x * SQUARE_SIZE - TILE_OFFSET,
-      top: y * SQUARE_SIZE - TILE_OFFSET,
-      zIndex: `${x + 1}${y + 1}`,
-    };
-
     return (
-        <div className='tile' key={props.id} style={styles} ref={(node) => drag(drop(node))}>
-            <span className="tile-letter">{props.letter}</span>
-        </div>
+      <Box
+        sx={{
+          width: `${SQUARE_SIZE}px`,
+          height: `${SQUARE_SIZE}px`,
+          background: "#FFA987",
+          cursor: "move",
+        }}
+        ref={(node) => drag(drop(node))}
+      >
+        <Typography variant="h3" sx={{
+          position: "relative",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          color: "#222",
+          "font-size": "2.5rem",
+          "line-height": "56px",
+          'text-align': "center",
+          "font-weight": 700,
+        }}>
+          {props.letter}
+        </Typography>  
+      </Box>
     );
   }
   

@@ -1,45 +1,48 @@
 import React from "react";
-import Tile from "./Tile";
-import utils from '../utils';
-import TileBenchSquare from "./TileBenchSquare";
+import TileNew from "./Tile";
+import TileBenchSquareNew from "./Square";
+import Stack from '@mui/material/Stack';
 
 const BOARD_WIDTH = 12;
 const BOARD_HEIGHT = 1;
 
 class TileBench extends React.Component {
 
-  renderBoardSquares() {
+  renderBoardSquares(tiles) {
     const matrix = Array.matrix(BOARD_WIDTH, BOARD_HEIGHT);
-    return matrix.map((row, rowIndex) =>
+
+    let squares = []
+
+    matrix.map((row, rowIndex) => {
+      let tempRow = []
+
       row.map(index => {
-        return (
-          <TileBenchSquare
-            x={index}
-            y={rowIndex}
-            key={index}
-          />
-        );
+
+        let element = <TileBenchSquareNew
+          x={index}
+          y={rowIndex}
+          key={`tile-bench-${index}${rowIndex}`}
+        />
+
+        tiles.forEach(tile => {
+          if (tile.x === index && tile.y === rowIndex) {
+            element = <TileNew key={tile.id} {...tile} />
+          }
+        })
+        tempRow.push(element)
       })
-    );
+      squares.push(
+      <Stack spacing={1} direction="row" justifyContent="center" alignItems="center">
+          {tempRow}
+      </Stack>
+      )
+    })
+    return squares;
   };
 
   render() {
-    let tiles = []
-    for (let tile of this.props.tiles) {
-      console.log("Creating Tile ", tile.letter, tile.x, tile.y)
-      tiles.push(<Tile key={tile.id} {...tile} />)
-    }
+    return this.renderBoardSquares(this.props.tiles)
+  }
+}
 
-    console.log("Tile bench", tiles)
-    return (
-        <div className="tile-bench-border">
-          <div className="tile-bench">
-            {tiles}
-            {this.renderBoardSquares()}
-          </div>
-      </div>
-    );
-  }
-  }
-  
-  export default TileBench;
+export default TileBench;
