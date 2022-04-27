@@ -1,5 +1,5 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
-import Typography from '@mui/material/Typography';
+import { Typography } from '@mui/material/';
 
 const GithubFooter = () => {
   return (

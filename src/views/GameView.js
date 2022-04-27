@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import GlobalStyles from '@mui/material/GlobalStyles';
-import Container from '@mui/material/Container';
-import { getAllWords, observe, resetTile } from "../GameState";
-import { generateRandomLetters } from "../GameState";
+import { Grid, Button, CssBaseline, Typography, Container, GlobalStyles, IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import { areAllConnected, getAllWords, observe, resetTile } from "../GameState";
+import { generateRandomLetters } from "../GameState";
 import Words from '../words.json'
 import GameAreaNew from "../components/GameArea";
-import Modal from '@mui/material/Modal';
-import CloseIcon from '@mui/icons-material/Close';
 import GithubFooter from "../components/GithubFooter";
+import ValidationModal from "../components/ValidationModal";
+import SettingsIcon from '@mui/icons-material/Settings';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+
 
 function randomize(setTiles, setFoundWords) {
   let newLetters = generateRandomLetters()
@@ -32,11 +29,16 @@ function randomize(setTiles, setFoundWords) {
   }
 }
 
-function validate(tiles, setFoundWords, handleClickOpen) {
-  console.log(tiles)
+function validate(tiles, setFoundWords, handleClickOpen, setValidationError) {
   let anyStartingSpot = Object.values(tiles).some(tile => tile.y === 0)
   if (anyStartingSpot) {
     alert("NOT ALL ON BOARD")
+    return;
+  }
+
+  let allConnected = areAllConnected(tiles)
+  if (!allConnected) {
+    alert("NOT ALL CONNECTED")
     return;
   }
 
@@ -96,17 +98,17 @@ const GameView = (props) => {
   let setTiles = [setTile1, setTile2, setTile3, setTile4, setTile5, setTile6, setTile7, setTile8, setTile9, setTile10, setTile11, setTile12]
 
   const [open, setOpen] = React.useState(false);
+  const [foundWords, setFoundWords] = useState([]);
+  const [error, setValidationError] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setValidationError(false)
     setOpen(false);
   };
-
-
-  const [foundWords, setFoundWords] = useState([]);
 
   let foundWordsDivs = []
   for (let word of foundWords) {
@@ -122,25 +124,38 @@ const GameView = (props) => {
     )
   }
 
-  console.log("\n\nRerender Game View")
   return (
     <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none', }}} />
       <CssBaseline />
       <Container
-        maxWidth="md"
+        maxWidth="xs"
         component="header"
         sx={{
           borderBottom: (theme) => `1px solid #555a5e`,
-          pb: 3
+          pb: 0
         }}
       >
-        <Typography variant="h3" color="inherit" align="center" noWrap>
-          QLESS
-        </Typography>
+        <Grid container maxWidth="sm" justifyContent="center">
+          <Grid container item md={2} justifyContent="flex-end" alignItems="flex-end">
+              <IconButton aria-label="delete" size="large">
+                <HelpOutlineIcon fontSize="inherit" sx={{ fontSize: "40px"}}/>
+              </IconButton>
+          </Grid>
+          <Grid container item md={5} justifyContent="center">
+            <Typography variant="h3" color="inherit" align="center" noWrap>
+              QLESS
+            </Typography>
+          </Grid>
+          <Grid container item md={2} justifyContent="flex-start" alignItems="flex-start">
+            <IconButton aria-label="delete" size="large">
+              <SettingsIcon fontSize="inherit" sx={{ fontSize: "40px"}}/>
+            </IconButton>
+          </Grid>
+        </Grid>
       </Container>
 
-      <Container disableGutters maxWidth="md" component="main" sx={{ pt: 2, pb: 2 }}>
+      <Container disableGutters maxWidth="md" component="main" sx={{ pt: 0, pb: 0 }}>
         <GameAreaNew tiles={tiles} />
       </Container>
       <Container disableGutters maxWidth="xs" component="main" justifyContent="center">
@@ -149,7 +164,7 @@ const GameView = (props) => {
             <Button variant="contained" sx={{backgroundColor: "#E54B4B"}} onClick={() => randomize(setTiles, setFoundWords)}>Randomize</Button>
           </Grid>
           <Grid container item md={6} justifyContent="center">
-            <Button variant="contained" sx={{backgroundColor: "#FFA987"}} onClick={() => validate(tiles, setFoundWords, handleClickOpen)}>Validate</Button>
+            <Button variant="contained" sx={{backgroundColor: "#FFA987"}} onClick={() => validate(tiles, setFoundWords, handleClickOpen, setValidationError)}>Validate</Button>
           </Grid>
         </Grid>
       </Container>
@@ -165,32 +180,8 @@ const GameView = (props) => {
       >
         <GithubFooter sx={{ mt: 5 }} />
       </Container>
+      <ValidationModal open={open} handleClose={handleClose} foundWordsDivs={foundWordsDivs} />
 
-      <Modal
-          open={open}
-          onClose={handleClose}
-          BackdropProps={{ style: { backgroundColor: "rgba(255,255,255,0.4)" } }} 
-        >
-          <Box justifyContent="center" alignContent="center" alignItems="center" sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 400,
-            bgcolor: 'background.paper',
-            border: '2px solid #000',
-            p: 4
-          }}>
-            <Grid container justifyContent="center" alignContent="center" xs={12} spacing={3}>
-              {/* <Grid container justifyContent="center" item xs={12}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Found Words
-                </Typography>
-              </Grid> */}
-              {foundWordsDivs}
-            </Grid>
-          </Box>
-      </Modal>
     </React.Fragment>
   )
 }

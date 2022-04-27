@@ -2,8 +2,7 @@ import React from "react";
 import { ItemTypes } from '../constants'
 import { useDrag, useDrop } from 'react-dnd'
 import { swapTile } from "../GameState";
-import { Box } from "@mui/material";
-import Typography from '@mui/material/Typography';
+import { Box, Typography } from "@mui/material";
 
 const SQUARE_SIZE = 70;
 
@@ -36,20 +35,18 @@ const Tile = (props) => {
           height: `${SQUARE_SIZE}px`,
           background: "#FFA987",
           cursor: "move",
+          borderRadius: "5px"
         }}
         ref={(node) => drag(drop(node))}
       >
         <Typography variant="h3" sx={{
           position: "relative",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
           color: "#222",
-          "font-size": "2.5rem",
-          "line-height": "56px",
-          'text-align': "center",
-          "font-weight": 700,
+          height: 1,
+          fontSize: "2.5rem",
+          lineHeight: `${SQUARE_SIZE}px`,
+          textAlign: "center",
+          fontWeight: 700,
         }}>
           {props.letter}
         </Typography>  

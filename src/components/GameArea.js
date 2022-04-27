@@ -8,7 +8,7 @@ class GameArea extends React.Component {
   render() {
     return (
       <>
-        <Container disableGutters maxWidth="lg" component="main" sx={{ pt: 10, pb: 5 }}>
+        <Container disableGutters maxWidth="lg" component="main" sx={{ pt: 5, pb: 5 }}>
           <Board tiles={this.props.tiles}/>
         </Container>
         <Container disableGutters maxWidth="lg" component="main" sx={{ pt: 5, pb: 6 }}>

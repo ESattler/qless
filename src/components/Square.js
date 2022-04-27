@@ -1,8 +1,8 @@
 import React from "react";
+import { Box } from "@mui/material";
 import { ItemTypes } from '../constants'
 import { useDrop } from 'react-dnd'
 import { moveTile } from "../GameState";
-import { Box } from "@mui/material";
 
 const SQUARE_SIZE = 70;
 
@@ -21,8 +21,8 @@ const TileBenchSquare = (props) => {
   let style = {
     width: `${SQUARE_SIZE}px`,
     height: `${SQUARE_SIZE}px`,
-    "background-color": "#444140",
-    "box-shadow": "inset 0px 0px 0px 1px #F4E5E1",
+    backgroundColor: "#444140",
+    boxShadow: "inset 0px 0px 0px 1px #F4E5E1",
   }
   if (isOver) {
     style.background = "rgb(87, 155, 87)"

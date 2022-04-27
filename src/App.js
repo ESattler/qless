@@ -13,6 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<AppView />} />
+        <Route path="*" element={<AppView />} />
       </Routes>
     </Router>
   );

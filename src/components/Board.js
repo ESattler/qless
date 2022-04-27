@@ -2,7 +2,7 @@ import React from "react";
 import utils from '../utils';
 import TileNew from "./Tile";
 import BoardSquareNew from "./Square";
-import Stack from '@mui/material/Stack';
+import { Stack } from '@mui/material';
 
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 10;

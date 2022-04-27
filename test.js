@@ -1,10 +1,10 @@
 let tiles = [
-  { x: 1, y: 3, letter: 'J' },
-  { x: 1, y: 5, letter: 'S' },
-  { x: 2, y: 4, letter: 'C' },
-  { x: 0, y: 4, letter: 'G' },
-  { x: 1, y: 2, letter: 'V' },
-  { x: 1, y: 4, letter: 'H' },
+  { x: 1, y: 3, letter: 'J', id: 0 },
+  { x: 1, y: 5, letter: 'S', id: 1 },
+  { x: 2, y: 4, letter: 'C', id: 2 },
+  { x: 0, y: 4, letter: 'G', id: 3 },
+  { x: 1, y: 2, letter: 'V', id: 4 },
+  { x: 1, y: 4, letter: 'H', id: 5 },
 ]
 
 // let farthestTopLeft;
@@ -80,3 +80,37 @@ tiles.forEach(tile => {
   }
 })
 
+let examinedTiles = []
+
+function countConnect(tile) {
+  let count = 0;
+  const [up, down, left, right] = getNeighbors(tile)
+  console.log(`Looking at tile ${tile.letter}`)
+  if (up && !examinedTiles.includes(up.id) ) {
+    examinedTiles.push(up.id)
+    count = count + 1 + countConnect(up)
+  }
+  if (down && !examinedTiles.includes(down.id)) {
+    examinedTiles.push(down.id)
+    count = count + 1 + countConnect(down)
+  }
+  if (left && !examinedTiles.includes(left.id)) {
+    examinedTiles.push(left.id)
+    count = count + 1 + countConnect(left)
+  }
+  if (right && !examinedTiles.includes(right.id)) {
+    examinedTiles.push(right.id)
+    count = count + 1 + countConnect(right,)
+  }
+  return count
+}
+
+(function (tile) {
+  console.log(tile)
+})("hi")
+
+let tile = tiles[0]
+examinedTiles.push(tile.id)
+
+console.log(countConnect(tile))
+console.log(examinedTiles.length)

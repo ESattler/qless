@@ -96,6 +96,35 @@ export function generateRandomLetters() {
 /*
   FIND LETTERS IN GRID
 */
+export function areAllConnected(tiles) {
+  let examinedTiles = []
+
+  let countConnect = (function (tile) {
+    const [up, down, left, right] = getNeighbors(tiles, tile)
+    console.log(`Looking at tile ${tile.letter}`)
+    if (up && !examinedTiles.includes(up.id) ) {
+      examinedTiles.push(up.id)
+      countConnect(up)
+    }
+    if (down && !examinedTiles.includes(down.id)) {
+      examinedTiles.push(down.id)
+      countConnect(down)
+    }
+    if (left && !examinedTiles.includes(left.id)) {
+      examinedTiles.push(left.id)
+      countConnect(left)
+    }
+    if (right && !examinedTiles.includes(right.id)) {
+      examinedTiles.push(right.id)
+      countConnect(right)
+    }
+  })
+
+  countConnect(tiles[0])
+
+  return examinedTiles.length === 12
+}
+
 function getNeighborsById(allTiles, id) {
   let tile = allTiles.filter(t => t.id === id)[0]
   return [tile, ...getNeighbors(allTiles, tile)]
@@ -128,7 +157,7 @@ function getNeighbors(allTiles, tile) {
 }
 
 function getWordDown(allTiles, tile) {
-  const [up, down, left, right] = getNeighbors(allTiles, tile)
+  const [, down, , ] = getNeighbors(allTiles, tile)
   if (!down) {
     return tile.letter
   }
@@ -136,7 +165,7 @@ function getWordDown(allTiles, tile) {
 }
 
 function getWordRight(allTiles, tile) {
-  const [up, down, left, right] = getNeighbors(allTiles, tile)
+  const [, , , right] = getNeighbors(allTiles, tile)
   if (!right) {
     return tile.letter
   }
