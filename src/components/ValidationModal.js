@@ -1,4 +1,5 @@
-import { Grid, Box, Modal } from '@mui/material'
+import { Grid, Box, Modal} from '@mui/material'
+import Draggable from 'react-draggable';
 
 const ValidationModal = (props) => { 
 

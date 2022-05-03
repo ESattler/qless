@@ -19,8 +19,10 @@ const TileBenchSquare = (props) => {
   }), [props.x, props.y])
 
   let style = {
-    width: `${SQUARE_SIZE}px`,
-    height: `${SQUARE_SIZE}px`,
+    // width: `${SQUARE_SIZE}px`,
+    // height: `${SQUARE_SIZE}px`,
+    width: `4rem`,
+    height: `4rem`,
     backgroundColor: "#444140",
     boxShadow: "inset 0px 0px 0px 1px #F4E5E1",
   }

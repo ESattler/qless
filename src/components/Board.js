@@ -7,9 +7,9 @@ import { Stack } from '@mui/material';
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 10;
 
-class Board extends React.Component {
+const Board = (props) => {
 
-  renderBoardSquares(tiles) {
+  function renderBoardSquares(tiles) {
     const matrix = Array.matrix(BOARD_WIDTH, BOARD_HEIGHT);
 
     let squares = []
@@ -22,12 +22,12 @@ class Board extends React.Component {
         let element = <BoardSquareNew
           x={index}W
           y={rowIndex+1}
-          key={`tile-bench-${index}${rowIndex}`}
+          key={`board-${index}${rowIndex}`}
         />
 
         tiles.forEach(tile => {
           if (tile.x === index && tile.y === rowIndex+1) {
-            element = <TileNew key={tile.id} {...tile} />
+            element = <TileNew key={`tile-${tile.id}`} {...tile} />
           }
         })
         tempRow.push(element)
@@ -41,9 +41,7 @@ class Board extends React.Component {
     return squares;
   };
 
-  render() {
-    return this.renderBoardSquares(this.props.tiles)
-  }
+  return renderBoardSquares(props.tiles)
 }
 
 export default Board;

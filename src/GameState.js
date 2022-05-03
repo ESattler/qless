@@ -1,16 +1,19 @@
-const letters = {}
+import Words from './words.json'
 
-let observers = {};
+let letters = {}
+let observer;
+
+/**
+  PROPOGATE CHANGES
+*/
 
 function emitChange() {
-  for (let id in observers) {
-    observers[id]({...letters[id]})
-  }
+  observer(letters)
 }
 
-export function observe(o, tile) {
-  observers[tile.id] = o
-  letters[tile.id] = tile
+export function observe(o, tiles) {
+  observer = o
+  letters = tiles
 }
 
 export function moveTile(toX, toY, item) {
@@ -60,10 +63,8 @@ export function canDropTile(squareX, squareY, item) {
   return (allStartingSpot || nextToExistingLetter) && !connectingPiece
 }
 
-export function resetTile(id, newTile) {
-    letters[id] = {
-      ...newTile
-    };
+export function resetTiles(tiles) {
+    letters = tiles
 }
 
 /*
@@ -91,6 +92,35 @@ export function generateRandomLetters() {
   let letters = [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve]
 
   return letters
+}
+
+export function createTiles(newLetters) {
+  let tempTiles = {}
+  newLetters.forEach((letter, i) => {
+    tempTiles[i] = {
+      x: i,
+      y: 0,
+      letter,
+      id: String(i)
+    }
+  })
+  return tempTiles
+}
+
+export function shuffleTiles(shuffledSpots) {
+  let tempTiles = {}
+  for (let i = 0; i < Object.values(letters).length; i++) {
+    tempTiles[i] = {
+      ...letters[i]
+    }
+
+    if (tempTiles[i].y === 0) {
+      tempTiles[i].x = shuffledSpots.pop()
+    }
+
+  }
+
+  return tempTiles
 }
 
 /*
@@ -179,7 +209,6 @@ export function getAllWords(allTiles) {
 
   allTiles.forEach(tile => {
     const [up, down, left, right] = getNeighbors(allTiles, tile)
-    //console.log(`Tile ${tile.letter} has: up neighbor ${up?.letter}, down neighbor ${down?.letter}, right neighbor ${right?.letter}, left neighbor ${left?.letter}`)
 
     if (down && !up) {
       console.log(`Found starting letter ${tile.letter}, getting word in DOWN direction`)
@@ -197,3 +226,58 @@ export function getAllWords(allTiles) {
   })
   return words
 }
+
+/*
+  SOLVE
+*/
+export function generateMatches(letters) {
+
+  let allPossible = getPermutationsAllLengths(letters)
+  let results = [];
+
+  for (let i = 0; i < allPossible.length; i++) {
+    if (Words.hasOwnProperty(allPossible[i].toUpperCase())) {
+      results.push(allPossible[i].toUpperCase());
+    }
+  }
+  // filter out duplicates and sort by length
+  results = [...new Set(results)].sort((a, b) => b.length - a.length);
+  console.log(results.slice(0, 5))
+};
+
+// find all permutations of an array
+function swap(array, i, j) {
+  if (i !== j) {
+    let swap = array[i];
+    array[i] = array[j];
+    array[j] = swap;
+  }
+};
+
+function permute_rec(res, str, array) {
+  if (array.length === 0) {
+    res.push(str);
+  } else {
+    for (let i = 0; i < array.length; i++) {
+      swap(array, 0, i);
+      permute_rec(res, str + array[0], array.slice(1));
+      swap(array, 0, i);
+    }
+  }
+};
+
+function xpermute_rec(res, sub, array) {
+  if (array.length === 0) {
+    if (sub.length > 0) permute_rec(res, "", sub);
+  } else {
+    xpermute_rec(res, sub, array.slice(1));
+    xpermute_rec(res, sub.concat(array[0]), array.slice(1));
+  }
+};
+
+// find all permutations for all lengths
+function getPermutationsAllLengths(array) {
+  let res = [];
+  xpermute_rec(res, [], array);
+  return res;
+};

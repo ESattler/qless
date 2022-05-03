@@ -31,8 +31,10 @@ const Tile = (props) => {
     return (
       <Box
         sx={{
-          width: `${SQUARE_SIZE}px`,
-          height: `${SQUARE_SIZE}px`,
+          // width: `${SQUARE_SIZE}px`,
+          // height: `${SQUARE_SIZE}px`,
+          width: `4rem`,
+          height: `4rem`,
           background: "#FFA987",
           cursor: "move",
           borderRadius: "5px"

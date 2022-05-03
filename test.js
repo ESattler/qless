@@ -1,3 +1,5 @@
+const Words = require('./src/words.json')
+
 let tiles = [
   { x: 1, y: 3, letter: 'J', id: 0 },
   { x: 1, y: 5, letter: 'S', id: 1 },
@@ -20,97 +22,163 @@ let tiles = [
 // console.log(farthestTopLeft)
 
 
-function getNeighbors(tile) {
-  let upNeighbor = null;
-  let downNeighbor = null;
-  let rightNeighbor = null;
-  let leftNeighbor = null;
-  tiles.forEach(tempTile => {
+// function getNeighbors(tile) {
+//   let upNeighbor = null;
+//   let downNeighbor = null;
+//   let rightNeighbor = null;
+//   let leftNeighbor = null;
+//   tiles.forEach(tempTile => {
     
-    if (tempTile.x === tile.x && tempTile.y - tile.y === -1) {
-      upNeighbor = tempTile
-    }
+//     if (tempTile.x === tile.x && tempTile.y - tile.y === -1) {
+//       upNeighbor = tempTile
+//     }
     
-    if (tempTile.x === tile.x && tempTile.y - tile.y === 1) {
-      downNeighbor = tempTile
-    }
+//     if (tempTile.x === tile.x && tempTile.y - tile.y === 1) {
+//       downNeighbor = tempTile
+//     }
     
-    if (tempTile.x - tile.x === 1 && tempTile.y  ===tile.y) {
-      rightNeighbor = tempTile
-    }
+//     if (tempTile.x - tile.x === 1 && tempTile.y  ===tile.y) {
+//       rightNeighbor = tempTile
+//     }
     
-    if (tempTile.x - tile.x === -1 && tempTile.y  ===tile.y) {
-      leftNeighbor = tempTile
+//     if (tempTile.x - tile.x === -1 && tempTile.y  ===tile.y) {
+//       leftNeighbor = tempTile
+//     }
+//   })
+//   return [upNeighbor, downNeighbor, leftNeighbor, rightNeighbor];
+// }
+
+// function getWordDown(tile) {
+//   const [up, down, left, right] = getNeighbors(tile)
+//   if (!down) {
+//     return tile.letter
+//   }
+//   return `${tile.letter}${getWordDown(down)}`
+// }
+
+// function getWordRight(tile) {
+//   const [up, down, left, right] = getNeighbors(tile)
+//   if (!right) {
+//     return tile.letter
+//   }
+//   return `${tile.letter}${getWordRight(right)}`
+// }
+
+
+// tiles.forEach(tile => {
+//   const [up, down, left, right] = getNeighbors(tile)
+//   //console.log(`Tile ${tile.letter} has: up neighbor ${up?.letter}, down neighbor ${down?.letter}, right neighbor ${right?.letter}, left neighbor ${left?.letter}`)
+
+//   if (down && !up) {
+//     console.log(`Found starting letter ${tile.letter}, getting word in DOWN direction`)
+//     let word = getWordDown(tile)
+//     console.log(`FOUND WORD ${word}`)
+//   }
+
+//   if (right && !left) {
+//     console.log(`Found starting letter ${tile.letter}, getting word in RIGHT direction`)
+//     let word = getWordRight(tile)
+//     console.log(`FOUND WORD ${word}`)
+//   }
+// })
+
+// let examinedTiles = []
+
+// function countConnect(tile) {
+//   let count = 0;
+//   const [up, down, left, right] = getNeighbors(tile)
+//   console.log(`Looking at tile ${tile.letter}`)
+//   if (up && !examinedTiles.includes(up.id) ) {
+//     examinedTiles.push(up.id)
+//     count = count + 1 + countConnect(up)
+//   }
+//   if (down && !examinedTiles.includes(down.id)) {
+//     examinedTiles.push(down.id)
+//     count = count + 1 + countConnect(down)
+//   }
+//   if (left && !examinedTiles.includes(left.id)) {
+//     examinedTiles.push(left.id)
+//     count = count + 1 + countConnect(left)
+//   }
+//   if (right && !examinedTiles.includes(right.id)) {
+//     examinedTiles.push(right.id)
+//     count = count + 1 + countConnect(right,)
+//   }
+//   return count
+// }
+
+// (function (tile) {
+//   console.log(tile)
+// })("hi")
+
+// let tile = tiles[0]
+// examinedTiles.push(tile.id)
+
+// console.log(countConnect(tile))
+// console.log(examinedTiles.length)
+
+function generateMatches(letters) {
+
+  let allPossible = getPermutationsAllLengths(letters)
+  let results = [];
+
+  for (let i = 0; i < allPossible.length; i++) {
+    if (Words.hasOwnProperty(allPossible[i].toUpperCase())) {
+      results.push(allPossible[i].toUpperCase());
     }
-  })
-  return [upNeighbor, downNeighbor, leftNeighbor, rightNeighbor];
-}
-
-function getWordDown(tile) {
-  const [up, down, left, right] = getNeighbors(tile)
-  if (!down) {
-    return tile.letter
   }
-  return `${tile.letter}${getWordDown(down)}`
-}
+  console.log(results)
+  // filter out duplicates and sort by length
+  results = [...new Set(results)].sort((a, b) => b.length - a.length);
+  console.log(results.slice(0, 5))
+};
 
-function getWordRight(tile) {
-  const [up, down, left, right] = getNeighbors(tile)
-  if (!right) {
-    return tile.letter
+function stringPermutations(letters) {
+  if (letters.length <= 2) return letters.length === 2 ? [letters, letters[1] + letters[0]] : [letters];
+  return letters
+    .split('')
+    .reduce(
+      (acc, letter, i) =>
+        acc.concat(stringPermutations(letters.slice(0, i) + letters.slice(i + 1)).map(val => letter + val)),
+      []
+    );
+};
+
+generateMatches(["d", "x", "y", "y", "t", "p", "l", "a"])//, "h", "e", "p", "d"])
+
+// find all permutations of an array
+function swap(array, i, j) {
+  if (i !== j) {
+    let swap = array[i];
+    array[i] = array[j];
+    array[j] = swap;
   }
-  return `${tile.letter}${getWordRight(right)}`
-}
+};
 
-
-tiles.forEach(tile => {
-  const [up, down, left, right] = getNeighbors(tile)
-  //console.log(`Tile ${tile.letter} has: up neighbor ${up?.letter}, down neighbor ${down?.letter}, right neighbor ${right?.letter}, left neighbor ${left?.letter}`)
-
-  if (down && !up) {
-    console.log(`Found starting letter ${tile.letter}, getting word in DOWN direction`)
-    let word = getWordDown(tile)
-    console.log(`FOUND WORD ${word}`)
+function permute_rec(res, str, array) {
+  if (array.length === 0) {
+    res.push(str);
+  } else {
+    for (let i = 0; i < array.length; i++) {
+      swap(array, 0, i);
+      permute_rec(res, str + array[0], array.slice(1));
+      swap(array, 0, i);
+    }
   }
+};
 
-  if (right && !left) {
-    console.log(`Found starting letter ${tile.letter}, getting word in RIGHT direction`)
-    let word = getWordRight(tile)
-    console.log(`FOUND WORD ${word}`)
+function xpermute_rec(res, sub, array) {
+  if (array.length === 0) {
+    if (sub.length > 0) permute_rec(res, "", sub);
+  } else {
+    xpermute_rec(res, sub, array.slice(1));
+    xpermute_rec(res, sub.concat(array[0]), array.slice(1));
   }
-})
+};
 
-let examinedTiles = []
-
-function countConnect(tile) {
-  let count = 0;
-  const [up, down, left, right] = getNeighbors(tile)
-  console.log(`Looking at tile ${tile.letter}`)
-  if (up && !examinedTiles.includes(up.id) ) {
-    examinedTiles.push(up.id)
-    count = count + 1 + countConnect(up)
-  }
-  if (down && !examinedTiles.includes(down.id)) {
-    examinedTiles.push(down.id)
-    count = count + 1 + countConnect(down)
-  }
-  if (left && !examinedTiles.includes(left.id)) {
-    examinedTiles.push(left.id)
-    count = count + 1 + countConnect(left)
-  }
-  if (right && !examinedTiles.includes(right.id)) {
-    examinedTiles.push(right.id)
-    count = count + 1 + countConnect(right,)
-  }
-  return count
-}
-
-(function (tile) {
-  console.log(tile)
-})("hi")
-
-let tile = tiles[0]
-examinedTiles.push(tile.id)
-
-console.log(countConnect(tile))
-console.log(examinedTiles.length)
+// find all permutations for all lengths
+function getPermutationsAllLengths(array) {
+  let res = [];
+  xpermute_rec(res, [], array);
+  return res;
+};

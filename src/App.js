@@ -7,8 +7,6 @@ import AppView from './views/AppView';
 
 function App() {
 
-  console.log("Rerender App")
-
   return (
     <Router>
       <Routes>

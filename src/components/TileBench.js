@@ -6,9 +6,9 @@ import Stack from '@mui/material/Stack';
 const BOARD_WIDTH = 12;
 const BOARD_HEIGHT = 1;
 
-class TileBench extends React.Component {
+const TileBench = (props) => { 
 
-  renderBoardSquares(tiles) {
+  function renderBoardSquares(tiles) {
     const matrix = Array.matrix(BOARD_WIDTH, BOARD_HEIGHT);
 
     let squares = []
@@ -26,7 +26,7 @@ class TileBench extends React.Component {
 
         tiles.forEach(tile => {
           if (tile.x === index && tile.y === rowIndex) {
-            element = <TileNew key={tile.id} {...tile} />
+            element = <TileNew key={`tile-${tile.id}`} {...tile} />
           }
         })
         tempRow.push(element)
@@ -40,9 +40,7 @@ class TileBench extends React.Component {
     return squares;
   };
 
-  render() {
-    return this.renderBoardSquares(this.props.tiles)
-  }
+  return renderBoardSquares(props.tiles)
 }
 
 export default TileBench;
