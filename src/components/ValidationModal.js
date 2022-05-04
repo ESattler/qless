@@ -51,8 +51,8 @@ const ValidationModal = (props) => {
     }
 
     let matrix = [];
-    for(let  i = 0;  i < 10; i++) {
-        matrix[i] = new Array(10).fill("⬛");
+    for(let  i = 0;  i < 8; i++) {
+        matrix[i] = new Array(8).fill("⬛");
     }
 
     props.tiles.forEach(tile => {
@@ -63,8 +63,8 @@ const ValidationModal = (props) => {
     })
 
     let text = "QLess Game (https://tinyurl.com/qlessgame)\n\n"
-    for (let i = 0; i < 10; i++) {
-      for (let j = 0; j < 10; j++) {
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
         text = text.concat(matrix[i][j])
       }
       text = text.concat("\n")
