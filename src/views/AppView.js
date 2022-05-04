@@ -1,6 +1,6 @@
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { createTiles, generateMatches, generateRandomLetters } from '../GameState';
+import { createTiles, generateRandomLetters } from '../GameState';
 import GameViewNew from './GameView';
 
 const AppView = () => {

@@ -1,7 +1,11 @@
-import { Grid, Button, Container } from '@mui/material'
+import { useState } from 'react';
+import { Grid, Button, Container, Popover, Typography } from '@mui/material'
 import { areAllConnected, createTiles, getAllWords, resetTiles, shuffleTiles, generateRandomLetters } from "../GameState";
 import Words from '../words.json'
+import ValidationModal from '../components/ValidationModal';
 
+const NotAllConnected = "NotAllConnected"
+const NotAllOnBoard = "NotAllOnBoard"
 
 const GameButtons = (props) => {
 
@@ -15,7 +19,7 @@ const GameButtons = (props) => {
   
     props.setTiles({...tempTiles})
     resetTiles({...tempTiles})
-    props.setFoundWords([])
+    setFoundWords([])
   }
   
   /**
@@ -50,16 +54,18 @@ const GameButtons = (props) => {
    * Validates all the letters on the board, connected and then opens
    * modal showing which are spelling correct
    */
-  const validate = () => {
+  const validate = (event) => {
     let anyStartingSpot = Object.values(props.tiles).some(tile => tile.y === 0)
     if (anyStartingSpot) {
-      alert("NOT ALL ON BOARD")
+      setValidationError(NotAllOnBoard)
+      handleClick(event)
       return;
     }
   
     let allConnected = areAllConnected(Object.values(props.tiles))
     if (!allConnected) {
-      alert("NOT ALL CONNECTED")
+      setValidationError(NotAllConnected)
+      handleClick(event)
       return;
     }
   
@@ -73,9 +79,33 @@ const GameButtons = (props) => {
       })
     })
   
-    props.setFoundWords(checkedWords)
-    props.handleValidationOpen()
+    setFoundWords(checkedWords)
+    handleValidationOpen()
   }
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const [validationError, setValidationError] = useState(null);
+
+  const [validationOpen, setValidationOpen] = useState(false);
+  const [foundWords, setFoundWords] = useState([]);
+
+  const handleValidationOpen = () => {
+    setValidationOpen(true);
+  };
+
+  const handleValidationClose = () => {
+    setValidationOpen(false);
+  };
+
 
 
   return (
@@ -91,9 +121,26 @@ const GameButtons = (props) => {
           <Button variant="contained" sx={{backgroundColor: "#FFA987", width: 1}} onClick={() => shuffle()}>Shuffle</Button>
         </Grid>
         <Grid container item md={3} justifyContent="center">
-          <Button variant="contained" sx={{backgroundColor: "#FFA987", width: 1}} onClick={() => validate()}>Validate</Button>
+          <Button variant="contained" sx={{backgroundColor: "#FFA987", width: 1}} onClick={(event) => validate(event)}>Validate</Button>
+          <Popover
+            open={Boolean(anchorEl)}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            {validationError === NotAllConnected &&
+              <Typography sx={{ p: 2 }}>All tiles are not currently connected</Typography>
+            }
+            {validationError === NotAllOnBoard &&
+              <Typography sx={{ p: 2 }}>All tiles are not currently on the board</Typography>
+            }
+          </Popover>
         </Grid>
       </Grid>
+      <ValidationModal open={validationOpen} handleClose={handleValidationClose} foundWords={foundWords} tiles={Object.values(props.tiles)} />
     </Container>
   )
 }

@@ -117,68 +117,90 @@ let tiles = [
 // console.log(countConnect(tile))
 // console.log(examinedTiles.length)
 
-function generateMatches(letters) {
+// function generateMatches(letters) {
 
-  let allPossible = getPermutationsAllLengths(letters)
-  let results = [];
+//   let allPossible = getPermutationsAllLengths(letters)
+//   let results = [];
 
-  for (let i = 0; i < allPossible.length; i++) {
-    if (Words.hasOwnProperty(allPossible[i].toUpperCase())) {
-      results.push(allPossible[i].toUpperCase());
-    }
+//   for (let i = 0; i < allPossible.length; i++) {
+//     if (Words.hasOwnProperty(allPossible[i].toUpperCase())) {
+//       results.push(allPossible[i].toUpperCase());
+//     }
+//   }
+//   console.log(results)
+//   // filter out duplicates and sort by length
+//   results = [...new Set(results)].sort((a, b) => b.length - a.length);
+//   console.log(results.slice(0, 5))
+// };
+
+// function stringPermutations(letters) {
+//   if (letters.length <= 2) return letters.length === 2 ? [letters, letters[1] + letters[0]] : [letters];
+//   return letters
+//     .split('')
+//     .reduce(
+//       (acc, letter, i) =>
+//         acc.concat(stringPermutations(letters.slice(0, i) + letters.slice(i + 1)).map(val => letter + val)),
+//       []
+//     );
+// };
+
+// generateMatches(["d", "x", "y", "y", "t", "p", "l", "a"])//, "h", "e", "p", "d"])
+
+// // find all permutations of an array
+// function swap(array, i, j) {
+//   if (i !== j) {
+//     let swap = array[i];
+//     array[i] = array[j];
+//     array[j] = swap;
+//   }
+// };
+
+// function permute_rec(res, str, array) {
+//   if (array.length === 0) {
+//     res.push(str);
+//   } else {
+//     for (let i = 0; i < array.length; i++) {
+//       swap(array, 0, i);
+//       permute_rec(res, str + array[0], array.slice(1));
+//       swap(array, 0, i);
+//     }
+//   }
+// };
+
+// function xpermute_rec(res, sub, array) {
+//   if (array.length === 0) {
+//     if (sub.length > 0) permute_rec(res, "", sub);
+//   } else {
+//     xpermute_rec(res, sub, array.slice(1));
+//     xpermute_rec(res, sub.concat(array[0]), array.slice(1));
+//   }
+// };
+
+// // find all permutations for all lengths
+// function getPermutationsAllLengths(array) {
+//   let res = [];
+//   xpermute_rec(res, [], array);
+//   return res;
+// };
+
+var matrix = [];
+for(var i=0; i<10; i++) {
+    matrix[i] = new Array(10).fill("⬛");
+}
+
+tiles.forEach(tile => {
+  let x = tile.x
+  let y = tile.y
+  matrix[9-x][10-y] = "🟩"
+})
+
+console.log(matrix)
+let text = ""
+for (let i = 0; i < 10; i++) {
+  for (let j = 0; j < 10; j++) {
+    text = text.concat(matrix[i][j])
   }
-  console.log(results)
-  // filter out duplicates and sort by length
-  results = [...new Set(results)].sort((a, b) => b.length - a.length);
-  console.log(results.slice(0, 5))
-};
+  text = text.concat("\n")
+}
 
-function stringPermutations(letters) {
-  if (letters.length <= 2) return letters.length === 2 ? [letters, letters[1] + letters[0]] : [letters];
-  return letters
-    .split('')
-    .reduce(
-      (acc, letter, i) =>
-        acc.concat(stringPermutations(letters.slice(0, i) + letters.slice(i + 1)).map(val => letter + val)),
-      []
-    );
-};
-
-generateMatches(["d", "x", "y", "y", "t", "p", "l", "a"])//, "h", "e", "p", "d"])
-
-// find all permutations of an array
-function swap(array, i, j) {
-  if (i !== j) {
-    let swap = array[i];
-    array[i] = array[j];
-    array[j] = swap;
-  }
-};
-
-function permute_rec(res, str, array) {
-  if (array.length === 0) {
-    res.push(str);
-  } else {
-    for (let i = 0; i < array.length; i++) {
-      swap(array, 0, i);
-      permute_rec(res, str + array[0], array.slice(1));
-      swap(array, 0, i);
-    }
-  }
-};
-
-function xpermute_rec(res, sub, array) {
-  if (array.length === 0) {
-    if (sub.length > 0) permute_rec(res, "", sub);
-  } else {
-    xpermute_rec(res, sub, array.slice(1));
-    xpermute_rec(res, sub.concat(array[0]), array.slice(1));
-  }
-};
-
-// find all permutations for all lengths
-function getPermutationsAllLengths(array) {
-  let res = [];
-  xpermute_rec(res, [], array);
-  return res;
-};
+console.log(text)

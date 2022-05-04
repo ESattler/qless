@@ -255,7 +255,7 @@ function swap(array, i, j) {
 };
 
 function permute_rec(res, str, array) {
-  if (array.length === 0) {
+  if (array.length === 0 && Words.hasOwnProperty(str)) {
     res.push(str);
   } else {
     for (let i = 0; i < array.length; i++) {
@@ -268,7 +268,8 @@ function permute_rec(res, str, array) {
 
 function xpermute_rec(res, sub, array) {
   if (array.length === 0) {
-    if (sub.length > 0) permute_rec(res, "", sub);
+    console.log(res)
+    if (sub.length >= 5) permute_rec(res, "", sub);
   } else {
     xpermute_rec(res, sub, array.slice(1));
     xpermute_rec(res, sub.concat(array[0]), array.slice(1));

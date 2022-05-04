@@ -28,13 +28,14 @@ const Tile = (props) => {
         }),
       }), [props.x, props.y])
 
+
+    let size = props.board ? '6vh' : '5vh'
+
     return (
       <Box
         sx={{
-          // width: `${SQUARE_SIZE}px`,
-          // height: `${SQUARE_SIZE}px`,
-          width: `4rem`,
-          height: `4rem`,
+          width: size,
+          height: size,
           background: "#FFA987",
           cursor: "move",
           borderRadius: "5px"
@@ -46,7 +47,7 @@ const Tile = (props) => {
           color: "#222",
           height: 1,
           fontSize: "2.5rem",
-          lineHeight: `${SQUARE_SIZE}px`,
+          lineHeight: size,
           textAlign: "center",
           fontWeight: 700,
         }}>

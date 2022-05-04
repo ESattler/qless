@@ -4,8 +4,6 @@ import { ItemTypes } from '../constants'
 import { useDrop } from 'react-dnd'
 import { moveTile } from "../GameState";
 
-const SQUARE_SIZE = 70;
-
 const TileBenchSquare = (props) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.TILE,
@@ -18,11 +16,11 @@ const TileBenchSquare = (props) => {
     }),
   }), [props.x, props.y])
 
+  let size = props.board ? '6vh' : '5vh'
+
   let style = {
-    // width: `${SQUARE_SIZE}px`,
-    // height: `${SQUARE_SIZE}px`,
-    width: `4rem`,
-    height: `4rem`,
+    width: size,
+    height: size,
     backgroundColor: "#444140",
     boxShadow: "inset 0px 0px 0px 1px #F4E5E1",
   }

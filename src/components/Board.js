@@ -1,11 +1,11 @@
 import React from "react";
 import utils from '../utils';
-import TileNew from "./Tile";
-import BoardSquareNew from "./Square";
+import Tile from "./Tile";
+import Square from "./Square";
 import { Stack } from '@mui/material';
 
-const BOARD_WIDTH = 10;
-const BOARD_HEIGHT = 10;
+const BOARD_WIDTH = 8;
+const BOARD_HEIGHT = 8;
 
 const Board = (props) => {
 
@@ -19,15 +19,16 @@ const Board = (props) => {
 
       row.map(index => {
 
-        let element = <BoardSquareNew
+        let element = <Square
           x={index}W
           y={rowIndex+1}
           key={`board-${index}${rowIndex}`}
+          board={true}
         />
 
         tiles.forEach(tile => {
           if (tile.x === index && tile.y === rowIndex+1) {
-            element = <TileNew key={`tile-${tile.id}`} {...tile} />
+            element = <Tile key={`tile-${tile.id}`} {...tile} board={true}/>
           }
         })
         tempRow.push(element)

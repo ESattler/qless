@@ -1,6 +1,6 @@
 import React from "react";
-import TileNew from "./Tile";
-import TileBenchSquareNew from "./Square";
+import Tile from "./Tile";
+import Square from "./Square";
 import Stack from '@mui/material/Stack';
 
 const BOARD_WIDTH = 12;
@@ -18,15 +18,16 @@ const TileBench = (props) => {
 
       row.map(index => {
 
-        let element = <TileBenchSquareNew
+        let element = <Square
           x={index}
           y={rowIndex}
           key={`tile-bench-${index}${rowIndex}`}
+          board={false}
         />
 
         tiles.forEach(tile => {
           if (tile.x === index && tile.y === rowIndex) {
-            element = <TileNew key={`tile-${tile.id}`} {...tile} />
+            element = <Tile key={`tile-${tile.id}`} {...tile} board={false} />
           }
         })
         tempRow.push(element)
