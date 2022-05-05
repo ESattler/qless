@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Grid, Button, Container, Popover, Typography } from '@mui/material'
 import { areAllConnected, createTiles, getAllWords, resetTiles, shuffleTiles, generateRandomLetters } from "../GameState";
 import Words from '../words.json'
@@ -6,6 +6,7 @@ import ValidationModal from '../components/ValidationModal';
 
 const NotAllConnected = "NotAllConnected"
 const NotAllOnBoard = "NotAllOnBoard"
+const NoTwoLetterWords = "NoTwoLetterWords"
 
 const GameButtons = (props) => {
 
@@ -58,18 +59,28 @@ const GameButtons = (props) => {
     let anyStartingSpot = Object.values(props.tiles).some(tile => tile.y === 0)
     if (anyStartingSpot) {
       setValidationError(NotAllOnBoard)
-      handleClick(event)
+      handlePopOverOpen(event)
       return;
     }
   
     let allConnected = areAllConnected(Object.values(props.tiles))
     if (!allConnected) {
       setValidationError(NotAllConnected)
-      handleClick(event)
+      handlePopOverOpen(event)
       return;
     }
-  
+
     const words = getAllWords(Object.values(props.tiles))
+
+    let twoLetterWords = words.some(word => word.length === 2)
+    let officialRules = localStorage.getItem("officialRules") === "true"
+    if (twoLetterWords && officialRules) {
+      setValidationError(NoTwoLetterWords)
+      handlePopOverOpen(event)
+      return
+    }
+
+  
     let checkedWords = []
     words.forEach(word => {
       console.log(`${word} | ${Words.hasOwnProperty(word)}`)
@@ -83,14 +94,14 @@ const GameButtons = (props) => {
     handleValidationOpen()
   }
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [popOverAnchor, setPopOverAnchor] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handlePopOverOpen = (event) => {
+    setPopOverAnchor(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handlePopOverClose = () => {
+    setPopOverAnchor(null);
   };
 
   const [validationError, setValidationError] = useState(null);
@@ -106,6 +117,12 @@ const GameButtons = (props) => {
     setValidationOpen(false);
   };
 
+  useEffect(
+    () => {
+      createNewGame()
+    },
+    [props.difficultyMode],
+  );
 
 
   return (
@@ -123,9 +140,9 @@ const GameButtons = (props) => {
         <Grid container item md={3} justifyContent="center">
           <Button variant="contained" sx={{backgroundColor: "#FFA987", width: 1}} onClick={(event) => validate(event)}>Validate</Button>
           <Popover
-            open={Boolean(anchorEl)}
-            anchorEl={anchorEl}
-            onClose={handleClose}
+            open={Boolean(popOverAnchor)}
+            anchorEl={popOverAnchor}
+            onClose={handlePopOverClose}
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'left',
@@ -136,6 +153,9 @@ const GameButtons = (props) => {
             }
             {validationError === NotAllOnBoard &&
               <Typography sx={{ p: 2 }}>All tiles are not currently on the board</Typography>
+            }
+            {validationError === NoTwoLetterWords &&
+              <Typography sx={{ p: 2 }}>Official Rules enabled, two letter words are banned</Typography>
             }
           </Popover>
         </Grid>

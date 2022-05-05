@@ -74,19 +74,27 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+/**
+ * Hard Mode
+ * AAA BBB CCCC DDD EEEE FF GGG HHHH III J KK LLLLL MMM NNNN OOOOO PPP RRRR SS TTTTT UU V WW X YY Z
+ * Easy Mode
+ * AAAA BBB CCCC DDD EEEEE FF GGG HHHH III J KK LLLLL MMM NNNN OOOOO PPP RRRR SSSS TTTTT UU WW Y
+ */
 export function generateRandomLetters() {
+
+  let easyMode = localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" : false
   
   let one = "CCDTBJ".charAt(getRandomInt(6))
-  let two = "XZBNSK".charAt(getRandomInt(6))
+  let two = easyMode ? "SSBNSK".charAt(getRandomInt(6)) : "XZBNSK".charAt(getRandomInt(6))
   let three = "YMLBML".charAt(getRandomInt(6))
-  let four = "ONIOIY".charAt(getRandomInt(6))
+  let four = easyMode ? "OEIOIN".charAt(getRandomInt(6)) : "ONIOIY".charAt(getRandomInt(6))
   let five = "MCCTTS".charAt(getRandomInt(6))
   let six = "HPTHTW".charAt(getRandomInt (6))
   let seven = "RLLFDW".charAt(getRandomInt(6))
   let eight = "EAOUUI".charAt(getRandomInt(6))
   let nine = "RHNHNR".charAt(getRandomInt(6))
   let ten = "OEAEAO".charAt(getRandomInt(6))
-  let eleven = "KPFVPG".charAt(getRandomInt(6))
+  let eleven = easyMode ? "KPFPGA".charAt(getRandomInt(6)) : "KPFVPG".charAt(getRandomInt(6))
   let twelve = "GDGRRL".charAt(getRandomInt (6))
 
   let letters = [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve]
@@ -131,7 +139,6 @@ export function areAllConnected(tiles) {
 
   let countConnect = (function (tile) {
     const [up, down, left, right] = getNeighbors(tiles, tile)
-    console.log(`Looking at tile ${tile.letter}`)
     if (up && !examinedTiles.includes(up.id) ) {
       examinedTiles.push(up.id)
       countConnect(up)
@@ -205,7 +212,6 @@ function getWordRight(allTiles, tile) {
 
 export function getAllWords(allTiles) {
   let words = []
-  console.log("IN GET ALL WORDS", allTiles)
 
   allTiles.forEach(tile => {
     const [up, down, left, right] = getNeighbors(allTiles, tile)
@@ -242,7 +248,6 @@ export function generateMatches(letters) {
   }
   // filter out duplicates and sort by length
   results = [...new Set(results)].sort((a, b) => b.length - a.length);
-  console.log(results.slice(0, 5))
 };
 
 // find all permutations of an array

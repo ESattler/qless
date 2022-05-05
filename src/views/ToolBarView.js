@@ -4,6 +4,7 @@ import { Grid, Typography, Container, IconButton } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import HelpDialog from '../components/HelpDialog';
+import SettingsDialog from "../components/SettingsDialog";
 
 const ToolBarView = (props) => {
 
@@ -14,6 +15,15 @@ const ToolBarView = (props) => {
 
   const handleHelpClose = () => {
     setHelpOpen(false);
+  };
+
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const handleSettingsOpen = () => {
+    setSettingsOpen(true);
+  };
+
+  const handleSettingsClose = () => {
+    setSettingsOpen(false);
   };
 
 
@@ -38,12 +48,14 @@ const ToolBarView = (props) => {
           </Typography>
         </Grid>
         <Grid container item md={2} justifyContent="flex-start" alignItems="flex-start">
-          <IconButton aria-label="delete" size="large">
+          <IconButton aria-label="delete" size="large" onClick={() => handleSettingsOpen()}>
             <SettingsIcon fontSize="inherit" sx={{ fontSize: "40px"}}/>
           </IconButton>
         </Grid>
       </Grid>
       <HelpDialog open={helpOpen} onClose={handleHelpClose} onClick={handleHelpClose}/>
+      <SettingsDialog open={settingsOpen} onClose={handleSettingsClose} onClick={handleSettingsClose} setDifficultyMode={props.setDifficultyMode} setRuleSet={props.setRuleSet}/>
+
     </Container>
   );
 }

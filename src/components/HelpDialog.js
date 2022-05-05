@@ -8,6 +8,8 @@ const HelpDialog = (props) => {
       onClose={props.onClose}
       aria-labelledby="customized-dialog-title"
       open={props.open}
+      maxWidth="sm"
+      fullWidth={true}
     >
       <DialogTitle sx={{ m: 0, p: 2 }}>
           <IconButton
