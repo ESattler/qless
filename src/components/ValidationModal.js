@@ -3,6 +3,7 @@ import { Grid, Paper, IconButton, Dialog, DialogTitle, DialogContent, Divider, T
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import Draggable from "react-draggable";
+import { isMobile } from 'react-device-detect';
 
 function PaperComponent(props) {
   return (
@@ -79,7 +80,7 @@ const ValidationModal = (props) => {
     <Dialog
       open={props.open}
       onClose={props.andleClose}
-      PaperComponent={PaperComponent}
+      PaperComponent={isMobile ? null : PaperComponent}
       aria-labelledby="draggable-dialog-title"
       id="draggable-dialog-title"
       maxWidth="sm"
