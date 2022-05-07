@@ -3,7 +3,6 @@ import { Grid, Paper, IconButton, Dialog, DialogTitle, DialogContent, Divider, T
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import Draggable from "react-draggable";
-import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 function PaperComponent(props) {
   return (
@@ -55,6 +54,9 @@ const ValidationModal = (props) => {
         matrix[i] = new Array(8).fill("⬛");
     }
 
+    const difficultyMode = localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" ? "Easy Mode" : "Normal Mode" : "Normal Mode"
+    const ruleSet = localStorage.getItem("officialRules") !== null ? localStorage.getItem("officialRules") === "true" ? "Official Rules" : "Unofficial Rules" : "Unofficial Rules"
+
     props.tiles.forEach(tile => {
       console.log("Tile", tile.letter, tile.x, tile.y)
       let x = tile.x
@@ -62,7 +64,7 @@ const ValidationModal = (props) => {
       matrix[y-1][x] = "🟩"
     })
 
-    let text = "QLess Game (https://tinyurl.com/qlessgame)\n\n"
+    let text = `QLess Game (https://tinyurl.com/qlessgame)\n${difficultyMode} | ${ruleSet}\n`
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
         text = text.concat(matrix[i][j])

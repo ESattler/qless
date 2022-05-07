@@ -2,6 +2,7 @@ import React from "react";
 import Tile from "./Tile";
 import Square from "./Square";
 import Stack from '@mui/material/Stack';
+import { Container } from "@mui/material";
 
 const BOARD_WIDTH = 12;
 const BOARD_HEIGHT = 1;
@@ -11,34 +12,33 @@ const TileBench = (props) => {
   function renderBoardSquares(tiles) {
     const matrix = Array.matrix(BOARD_WIDTH, BOARD_HEIGHT);
 
-    let squares = []
+    let firstRow = []
+    let secondRow = []
 
-    matrix.map((row, rowIndex) => {
-      let tempRow = []
-
-      row.map(index => {
-
-        let element = <Square
-          x={index}
-          y={rowIndex}
-          key={`tile-bench-${index}${rowIndex}`}
-          board={false}
-        />
-
+    matrix.forEach((row, rowIndex) => {
+      row.forEach((value, index) => {
         tiles.forEach(tile => {
           if (tile.x === index && tile.y === rowIndex) {
-            element = <Tile key={`tile-${tile.id}`} {...tile} board={false} />
+            if ( index <= 5) {
+              firstRow.push(<Tile key={`tile-${tile.id}`} {...tile} board={false} />)
+            } else {
+              secondRow.push(<Tile key={`tile-${tile.id}`} {...tile} board={false} />)
+            }
           }
         })
-        tempRow.push(element)
       })
-      squares.push(
-      <Stack spacing={1} direction="row" justifyContent="center" alignItems="center">
-          {tempRow}
-      </Stack>
-      )
     })
-    return squares;
+
+    return (
+      <>
+        <Stack spacing={3} direction="row" justifyContent="center" alignItems="center">
+            {firstRow}
+        </Stack>
+        <Stack spacing={3} direction="row" justifyContent="center" alignItems="center" sx={{paddingTop: '10px'}}>
+            {secondRow}
+        </Stack>
+      </>
+    )
   };
 
   return renderBoardSquares(props.tiles)

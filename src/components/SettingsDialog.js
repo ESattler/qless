@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import {Typography, IconButton, Dialog, DialogTitle, DialogContent, Switch, Divider, Box } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
+import { Daily, Unlimited } from '../constants';
 
 
 const SettingsDialog = (props) => {
 
-  const [easyMode, setEasyMode] = useState(localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" : false);
+  const [easyMode, setEasyMode] = useState(localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" && props.mode === Unlimited : false);
 
   const handleEasyModeChange = (event) => {
     localStorage.setItem("easyMode", event.target.checked)
@@ -45,14 +46,14 @@ const SettingsDialog = (props) => {
           </IconButton>
       </DialogTitle>
       <DialogContent>
-        <Divider sx={{ m: 0, p: 2 }}>EASY MODE</Divider>
+        <Divider sx={{ m: 0, p: 2, fontWeight: "bold" }}>EASY MODE</Divider>
         <Box textAlign='center'>
           <Typography>
-            Guaranteed three vowels and removes V/X/Z from letter pool
+            Guaranteed three vowels and removes V/X/Z from letter pool. Not available in DAILY mode.
           </Typography>
-          <Switch checked={easyMode} onChange={handleEasyModeChange}/>
+          <Switch checked={easyMode} disabled={props.mode === Daily} onChange={handleEasyModeChange}/>
         </Box>
-        <Divider sx={{ m: 0, p: 2 }}>OFFICIAL RULES</Divider>
+        <Divider sx={{ m: 0, p: 2, fontWeight: "bold" }}>OFFICIAL RULES</Divider>
         <Box textAlign='center'>
           <Typography>
             Bans two letter words

@@ -4,8 +4,6 @@ import { useDrag, useDrop } from 'react-dnd'
 import { swapTile } from "../GameState";
 import { Box, Typography } from "@mui/material";
 
-const SQUARE_SIZE = 70;
-
 const Tile = (props) => {
 
     const [{ isDragging }, drag] = useDrag(() => ({
@@ -29,25 +27,31 @@ const Tile = (props) => {
       }), [props.x, props.y])
 
 
-    let size = props.board ? '6vh' : '5vh'
+    let style = {
+      width: props.board ? '8vw' : '4vw',
+      height: props.board ? '8vw' : '4vw',
+      minWidth: props.board ? "3rem" : "2.5rem",
+      maxWidth: props.board ? "4rem" : "2.5rem",
+      minHeight: props.board ? "3rem" : "2.5rem",
+      maxHeight: props.board ? "4rem" : "2.5rem",
+      background: "#FFA987",
+      cursor: "move",
+      borderRadius: "5px"
+    }
 
     return (
       <Box
-        sx={{
-          width: size,
-          height: size,
-          background: "#FFA987",
-          cursor: "move",
-          borderRadius: "5px"
-        }}
+        alignItems="center"
+        justifyContent="center"
+        sx={style}
         ref={(node) => drag(drop(node))}
       >
-        <Typography variant="h3" sx={{
+        <Typography alignItems="center" justifyContent="center" sx={{
           position: "relative",
-          color: "#222",
+          color: "#444140",
           height: 1,
-          fontSize: "2.5rem",
-          lineHeight: size,
+          fontSize: "1rem",
+          lineHeight: style.minHeight,
           textAlign: "center",
           fontWeight: 700,
         }}>

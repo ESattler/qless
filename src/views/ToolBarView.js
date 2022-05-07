@@ -1,10 +1,11 @@
 
 import { useState } from "react";
-import { Grid, Typography, Container, IconButton } from '@mui/material'
+import { Typography, IconButton, AppBar, Toolbar, Button, Grid} from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import HelpDialog from '../components/HelpDialog';
 import SettingsDialog from "../components/SettingsDialog";
+import { Daily, Unlimited } from "../constants";
 
 const ToolBarView = (props) => {
 
@@ -26,37 +27,60 @@ const ToolBarView = (props) => {
     setSettingsOpen(false);
   };
 
-
   return (
-    <Container
-      maxWidth="xs"
-      component="header"
-      sx={{
-        borderBottom: (theme) => `1px solid #555a5e`,
-        pb: 0
-      }}
+    <AppBar
+      position="static"
+      color="default"
+      elevation={0}
+      sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`}}
     >
-      <Grid container maxWidth="sm" justifyContent="center">
-        <Grid container item md={2} justifyContent="flex-end" alignItems="flex-end">
-            <IconButton aria-label="delete" size="large" onClick={() => handleHelpOpen()}>
-              <HelpOutlineIcon fontSize="inherit" sx={{ fontSize: "40px"}}/>
-            </IconButton>
+      <Toolbar justifyContent="center" alignItems="center" sx={{justifyContent: "center", alignItems: "center"}}>
+        <Grid maxWidth="sm" justify={"space-between"} container>
+          <Grid xs={3} container direction="row" justifyContent="center" alignItems="center">
+            <Typography sx={{fontWeight: 700, color: "#444140",}}>QLESS</Typography>
+          </Grid>
+          <Grid xs={6} container direction="row" justifyContent="left" alignItems="center">
+            <Grid container direction="row" justifyContent="left" alignItems="center">
+              <Button disableRipple href="/" variant="text" sx={{
+                borderRadius: "10px",
+                color: "#444140",
+                fontWeight: 500,
+                backgroundColor: props.mode === Daily ? "#FFA987" : "transparent",
+                '&:hover': {
+                  backgroundColor: '#FFA987',
+                },
+                marginRight: "10px"
+              }}>
+                Daily
+              </Button>
+              <Button disableRipple href="/unlimited" variant="text" sx={{
+                borderRadius: "10px",
+                color: "#444140",
+                fontWeight: 500,
+                backgroundColor: props.mode === Unlimited ? "#FFA987" : "transparent",
+                '&:hover': {
+                  backgroundColor: '#FFA987',
+                },
+              }}>
+                Unlimited
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid xs={3}> 
+            <Grid container direction="row" justifyContent="center" alignItems="center">
+              <IconButton size="large" onClick={() => handleHelpOpen()}>
+                <HelpOutlineIcon />
+              </IconButton>
+              <IconButton size="large" onClick={() => handleSettingsOpen()}>
+                <SettingsIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid container item md={5} justifyContent="center">
-          <Typography variant="h3" color="inherit" align="center" noWrap>
-            QLESS
-          </Typography>
-        </Grid>
-        <Grid container item md={2} justifyContent="flex-start" alignItems="flex-start">
-          <IconButton aria-label="delete" size="large" onClick={() => handleSettingsOpen()}>
-            <SettingsIcon fontSize="inherit" sx={{ fontSize: "40px"}}/>
-          </IconButton>
-        </Grid>
-      </Grid>
-      <HelpDialog open={helpOpen} onClose={handleHelpClose} onClick={handleHelpClose}/>
-      <SettingsDialog open={settingsOpen} onClose={handleSettingsClose} onClick={handleSettingsClose} setDifficultyMode={props.setDifficultyMode} setRuleSet={props.setRuleSet}/>
-
-    </Container>
+      </Toolbar>
+    <HelpDialog open={helpOpen} onClose={handleHelpClose} onClick={handleHelpClose}/>
+    <SettingsDialog open={settingsOpen} onClose={handleSettingsClose} onClick={handleSettingsClose} setDifficultyMode={props.setDifficultyMode} setRuleSet={props.setRuleSet} mode={props.mode}/>
+  </AppBar>
   );
 }
 

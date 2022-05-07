@@ -3,10 +3,7 @@ import { Grid, Button, Container, Popover, Typography } from '@mui/material'
 import { areAllConnected, createTiles, getAllWords, resetTiles, shuffleTiles, generateRandomLetters } from "../GameState";
 import Words from '../words.json'
 import ValidationModal from '../components/ValidationModal';
-
-const NotAllConnected = "NotAllConnected"
-const NotAllOnBoard = "NotAllOnBoard"
-const NoTwoLetterWords = "NoTwoLetterWords"
+import { Daily, NotAllConnected, NotAllOnBoard, NoTwoLetterWords, Unlimited } from '../constants';
 
 const GameButtons = (props) => {
 
@@ -124,20 +121,23 @@ const GameButtons = (props) => {
     [props.difficultyMode],
   );
 
+  
 
   return (
     <Container disableGutters maxWidth="sm" component="main" justifyContent="center">
       <Grid container maxWidth="sm" spacing={3}>
-        <Grid container item md={3} justifyContent="center">
-          <Button variant="contained" sx={{backgroundColor: "#E54B4B", width: 1}} onClick={() => createNewGame()}>New Game</Button>
-        </Grid>
-        <Grid container item md={3} justifyContent="center">
+        { props.mode === Unlimited &&
+          <Grid container item md={3} justifyContent="center">
+            <Button variant="contained" sx={{backgroundColor: "#E54B4B", width: 1}} onClick={() => createNewGame()}>New Game</Button>
+          </Grid>
+        }
+        <Grid container item md={props.mode === Unlimited ? 3 : 4} justifyContent="center">
           <Button variant="contained" sx={{backgroundColor: "#FFA987", width: 1}} onClick={() => setTilesBackToBench()}>Reset Tiles</Button>
         </Grid>
-        <Grid container item md={3} justifyContent="center">
+        <Grid container item md={props.mode === Unlimited ? 3 : 4} justifyContent="center">
           <Button variant="contained" sx={{backgroundColor: "#FFA987", width: 1}} onClick={() => shuffle()}>Shuffle</Button>
         </Grid>
-        <Grid container item md={3} justifyContent="center">
+        <Grid container item md={props.mode === Unlimited ? 3 : 4} justifyContent="center">
           <Button variant="contained" sx={{backgroundColor: "#FFA987", width: 1}} onClick={(event) => validate(event)}>Validate</Button>
           <Popover
             open={Boolean(popOverAnchor)}

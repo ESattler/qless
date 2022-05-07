@@ -26,17 +26,17 @@ const HelpDialog = (props) => {
           </IconButton>
       </DialogTitle>
       <DialogContent>
-        <Divider sx={{ m: 0, p: 2 }}>HISTORY</Divider>
+        <Divider sx={{ m: 0, p: 2, fontWeight: "bold" }}>HISTORY</Divider>
         <Typography gutterBottom>
           QLess is based on the dice game of a similar name. The Q-Less dice game was created by Tom Sturdevant
           and can be bought from the <Link href="https://www.q-lessgame.com/" target="_blank">Q-Less website</Link>.
         </Typography>
-        <Divider sx={{ m: 0, p: 2 }}>HOW TO PLAY</Divider>
+        <Divider sx={{ m: 0, p: 2, fontWeight: "bold" }}>HOW TO PLAY</Divider>
         <Typography gutterBottom>
           The goal of the game is to create a board of interconnecting words using twelve randomized letters.
           All words are validated using the 2019 official Scrabble® dictionary.
         </Typography>
-        <Divider sx={{ m: 0, p: 2 }}>RULE CHANGES</Divider>
+        <Divider sx={{ m: 0, p: 2, fontWeight: "bold" }}>RULE CHANGES</Divider>
         <Typography gutterBottom>
           This game differs from the official Q-Less game in that it allows the use of two letter words.
           In the settings you can turn on the official ruleset which will ban two letter words.

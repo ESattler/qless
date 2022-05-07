@@ -14,10 +14,10 @@ const Board = (props) => {
 
     let squares = []
 
-    matrix.map((row, rowIndex) => {
+    matrix.forEach((row, rowIndex) => {
       let tempRow = []
 
-      row.map(index => {
+      row.forEach((val, index) => {
 
         let element = <Square
           x={index}W

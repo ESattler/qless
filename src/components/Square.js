@@ -16,11 +16,13 @@ const TileBenchSquare = (props) => {
     }),
   }), [props.x, props.y])
 
-  let size = props.board ? '6vh' : '5vh'
-
   let style = {
-    width: size,
-    height: size,
+    width: props.board ? '8vw' : '4vw',
+    height: props.board ? '8vw' : '4vw',
+    minWidth: "3rem",
+    maxWidth: props.board ? "4rem" : "2.5rem",
+    minHeight: "3rem",
+    maxHeight: props.board ? "4rem" : "2.5rem",
     backgroundColor: "#444140",
     boxShadow: "inset 0px 0px 0px 1px #F4E5E1",
   }
