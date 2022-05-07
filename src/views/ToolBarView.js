@@ -6,6 +6,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import HelpDialog from '../components/HelpDialog';
 import SettingsDialog from "../components/SettingsDialog";
 import { Daily, Unlimited } from "../constants";
+import { useNavigate } from 'react-router-dom'
 
 const ToolBarView = (props) => {
 
@@ -27,6 +28,8 @@ const ToolBarView = (props) => {
     setSettingsOpen(false);
   };
 
+  let nav = useNavigate();
+
   return (
     <AppBar
       position="static"
@@ -41,7 +44,7 @@ const ToolBarView = (props) => {
           </Grid>
           <Grid xs={6} container direction="row" justifyContent="left" alignItems="center">
             <Grid container direction="row" justifyContent="left" alignItems="center">
-              <Button disableRipple href="/" variant="text" sx={{
+              <Button disableRipple onClick={() => nav("/qless", { replace: true })} variant="text" sx={{
                 borderRadius: "10px",
                 color: "#444140",
                 fontWeight: 500,
@@ -53,7 +56,7 @@ const ToolBarView = (props) => {
               }}>
                 Daily
               </Button>
-              <Button disableRipple href="/unlimited" variant="text" sx={{
+              <Button disableRipple onClick={() => nav("/qless/unlimited", { replace: true })} variant="text" sx={{
                 borderRadius: "10px",
                 color: "#444140",
                 fontWeight: 500,

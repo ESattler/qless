@@ -11,8 +11,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AppView mode={Daily}/>} />
-        <Route path="/unlimited" element={<AppView mode={Unlimited}/>} />
+        <Route exact path="/qless" element={<AppView mode={Daily}/>} />
+        <Route exact path="/qless/unlimited" element={<AppView mode={Unlimited}/>} />
         <Route path="*" element={<AppView mode={Daily} />} />
       </Routes>
     </Router>
