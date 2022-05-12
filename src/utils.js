@@ -48,3 +48,11 @@ Array.matrix = (x, y) => {
   const columns = Array.range(x);
   return rows.map( (row, i) => columns.slice() );
 }
+
+export function getDate() {
+  const options = {
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    timeZone: 'America/New_York'
+  };
+  return Intl.DateTimeFormat('en-US', options).format(new Date())
+}

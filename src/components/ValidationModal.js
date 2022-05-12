@@ -4,6 +4,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import Draggable from "react-draggable";
 import { isMobile } from 'react-device-detect';
+import { Daily } from '../constants';
+import { getDate } from '../utils';
 
 function PaperComponent(props) {
   return (
@@ -36,6 +38,13 @@ const ValidationModal = (props) => {
     }
   }
 
+  if (props.mode === Daily && invalidWords.length === 0 && props.open) {
+    localStorage.setItem("dailyTiles", JSON.stringify({
+      tiles: props.tiles,
+      date: getDate()
+    }))
+  }
+
   const [toolTipOpen, setToolTipOpen] = useState(false);
   const handleShareClick = () => {
     setToolTipOpen(true)
@@ -58,14 +67,22 @@ const ValidationModal = (props) => {
     const difficultyMode = localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" ? "Easy Mode" : "Normal Mode" : "Normal Mode"
     const ruleSet = localStorage.getItem("officialRules") !== null ? localStorage.getItem("officialRules") === "true" ? "Official Rules" : "Unofficial Rules" : "Unofficial Rules"
 
-    props.tiles.forEach(tile => {
+    Object.values(props.tiles).forEach(tile => {
       console.log("Tile", tile.letter, tile.x, tile.y)
       let x = tile.x
       let y = tile.y
       matrix[y-1][x] = "🟩"
     })
 
-    let text = `QLess Game (https://tinyurl.com/qlessgame)\n${difficultyMode} | ${ruleSet}\n`
+    let modeText
+    if (props.mode === Daily) {
+      modeText = `Daily (${getDate()})`
+    }
+    else {
+      modeText = "Unlimited"
+    }
+
+    let text = `QLess Game (https://tinyurl.com/qlessgame)\n${difficultyMode} | ${ruleSet} | ${modeText}\n`
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
         text = text.concat(matrix[i][j])

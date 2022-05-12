@@ -116,7 +116,9 @@ const GameButtons = (props) => {
 
   useEffect(
     () => {
-      createNewGame()
+      if (props.mode === Unlimited) {
+        createNewGame()
+      }
     },
     [props.difficultyMode],
   );
@@ -160,7 +162,7 @@ const GameButtons = (props) => {
           </Popover>
         </Grid>
       </Grid>
-      <ValidationModal open={validationOpen} handleClose={handleValidationClose} foundWords={foundWords} tiles={Object.values(props.tiles)} />
+      <ValidationModal open={validationOpen} tiles={props.tiles} handleClose={handleValidationClose} foundWords={foundWords} mode={props.mode} />
     </Container>
   )
 }

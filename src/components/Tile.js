@@ -36,7 +36,10 @@ const Tile = (props) => {
       maxHeight: props.board ? "4rem" : "2.5rem",
       background: "#FFA987",
       cursor: "move",
-      borderRadius: "5px"
+      borderRadius: "5px",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
     }
 
     return (
@@ -46,13 +49,9 @@ const Tile = (props) => {
         sx={style}
         ref={(node) => drag(drop(node))}
       >
-        <Typography alignItems="center" justifyContent="center" sx={{
-          position: "relative",
+        <Typography sx={{
           color: "#444140",
-          height: 1,
           fontSize: "1rem",
-          lineHeight: style.minHeight,
-          textAlign: "center",
           fontWeight: 700,
         }}>
           {props.letter}

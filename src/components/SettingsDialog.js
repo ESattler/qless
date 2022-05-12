@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {Typography, IconButton, Dialog, DialogTitle, DialogContent, Switch, Divider, Box } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import { Daily, Unlimited } from '../constants';
@@ -14,6 +14,14 @@ const SettingsDialog = (props) => {
     event.target.checked ? props.setDifficultyMode("Easy Mode") : props.setDifficultyMode("Normal Mode")
 
   };
+
+  useEffect(() => {
+    if (props.mode === Daily) {
+      setEasyMode(false)
+    } else {
+      setEasyMode(localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" && props.mode === Unlimited : false)
+    }
+  }, [props.mode])
 
   const [officalRules, setOfficalRules] = useState(localStorage.getItem("officialRules") !== null ? localStorage.getItem("officialRules") === "true" : false);
 

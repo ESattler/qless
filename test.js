@@ -183,24 +183,138 @@ let tiles = [
 //   return res;
 // };
 
-var matrix = [];
-for(var i=0; i<10; i++) {
-    matrix[i] = new Array(10).fill("⬛");
+// var matrix = [];
+// for(var i=0; i<10; i++) {
+//     matrix[i] = new Array(10).fill("⬛");
+// }
+
+// tiles.forEach(tile => {
+//   let x = tile.x
+//   let y = tile.y
+//   matrix[9-x][10-y] = "🟩"
+// })
+
+// console.log(matrix)
+// let text = ""
+// for (let i = 0; i < 10; i++) {
+//   for (let j = 0; j < 10; j++) {
+//     text = text.concat(matrix[i][j])
+//   }
+//   text = text.concat("\n")
+// }
+
+// console.log(text)
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
 
-tiles.forEach(tile => {
-  let x = tile.x
-  let y = tile.y
-  matrix[9-x][10-y] = "🟩"
+function generateRandomLetters() {
+  
+  let one = "CCDTBJ".charAt(getRandomInt(6))
+  let two = "XZBNSK".charAt(getRandomInt(6))
+  let three = "YMLBML".charAt(getRandomInt(6))
+  let four = "ONIOIY".charAt(getRandomInt(6))
+  let five = "MCCTTS".charAt(getRandomInt(6))
+  let six = "HPTHTW".charAt(getRandomInt (6))
+  let seven = "RLLFDW".charAt(getRandomInt(6))
+  let eight = "EAOUUI".charAt(getRandomInt(6))
+  let nine = "RHNHNR".charAt(getRandomInt(6))
+  let ten = "OEAEAO".charAt(getRandomInt(6))
+  let eleven = "KPFVPG".charAt(getRandomInt(6))
+  let twelve = "GDGRRL".charAt(getRandomInt (6))
+
+  let letters = [one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve]
+
+  return letters
+}
+
+// for (let i = 0; i < 30; i++){
+//   console.log(generateRandomLetters().join(""))
+// }
+
+let letters = [
+  "CNLYCWLUROGL",
+  "JKMYTTLANAFG",
+  "BZMITHLIHEVG",
+  "DKLICPLAREPL",
+  "DXBOCTFINAPG",
+  "DKBOCHLUNAFL",
+  "DBMOTHFUHAPG",
+  "CKYNTTDANOKR",
+  "CKYITTREREKR",
+  "JNLISTLIHOFR",
+  "TSLICTWUHEVG",
+  "CBLNTPLOREPG",
+  "BNMOSPWENAVR",
+  "CZMOCTFAROPR",
+  "JNMYCTLUREFR",
+  "JNBIMPDANAVR",
+  "CNLNSTLURAKR",
+  "JZLOTWDUHOGR",
+  "JNYIMPREHOVD",
+  "JBLOCHLAHAVR",
+  "CKLNCHFAHEPR",
+  "JKMYTHWOREPR",
+  "TXMICTFURAKR",
+  "TSLICPDOHAFG",
+  "TBBYCTFARAGD",
+  "DKLICPFIHEPL",
+  "CKLITWFARAVG",
+  "JNLOCTLURAVR",
+  "TZLOSTWOHEPG",
+]
+
+let date = new Date()
+
+let options = {
+  year: 'numeric', month: 'numeric', day: 'numeric',
+  timeZone: 'America/New_York'
+};
+console.log(new Intl.DateTimeFormat('en-US', options).format(date));
+
+let startDate = date
+
+let dailyList = {}
+
+letters.forEach((letter, index) => {
+  let tempDate = new Date(startDate)
+  tempDate.setDate(startDate.getDate() + index)
+  console.log(tempDate)
+  tempDate = new Intl.DateTimeFormat('en-US', options).format(tempDate)
+  dailyList[tempDate] = letter.split("")
 })
 
-console.log(matrix)
-let text = ""
-for (let i = 0; i < 10; i++) {
-  for (let j = 0; j < 10; j++) {
-    text = text.concat(matrix[i][j])
-  }
-  text = text.concat("\n")
-}
+console.log(dailyList)
 
-console.log(text)
+/*
+CNLYCWLUROGL
+JKMYTTLANAFG
+BZMITHLIHEVG
+DKLICPLAREPL
+DXBOCTFINAPG
+DKBOCHLUNAFL
+DBMOTHFUHAPG
+CKYNTTDANOKR
+CKYITTREREKR
+JNLISTLIHOFR
+TSLICTWUHEVG
+CBLNTPLOREPG
+BNMOSPWENAVR
+CZMOCTFAROPR
+JNMYCTLUREFR
+JNBIMPDANAVR
+CNLNSTLURAKR
+JZLOTWDUHOGR
+JNYIMPREHOVD
+JBLOCHLAHAVR
+CKLNCHFAHEPR
+JKMYTHWOREPR
+TXMICTFURAKR
+TSLICPDOHAFG
+TBBYCTFARAGD
+DKLICPFIHEPL
+CKLITWFARAVG
+JNLOCTLURAVR
+TZLOSTWOHEPG
+*/

@@ -7,7 +7,7 @@ const GameArea = (props) => {
 
   return (
     <Container disableGutters maxWidth="md" component="main" sx={{ pt: 0, pb: 0 }}>
-      <Container disableGutters maxWidth="lg" component="main" sx={{ pt: 2, pb: 5 }}>
+      <Container disableGutters maxWidth="lg" component="main" sx={{ pt: 2, pb: 0 }}>
         <Stack spacing={0} direction="row" justifyContent="center" alignItems="center">
           <Typography sx={{
             fontWeight: 'bold',

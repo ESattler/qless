@@ -1,3 +1,5 @@
+import { Daily, dailyLetters } from './constants';
+import { getDate } from './utils';
 import Words from './words.json'
 
 let letters = {}
@@ -67,6 +69,19 @@ export function resetTiles(tiles) {
     letters = tiles
 }
 
+export function getLetters(gameMode) {
+  if (gameMode === Daily) {
+    return getDailyLetters()
+  }
+  return generateRandomLetters()
+}
+
+function getDailyLetters() {
+  const date = getDate()
+
+  return dailyLetters[date]
+}
+
 /*
   GENERATE RANDOM LETTERS
 */
@@ -102,7 +117,21 @@ export function generateRandomLetters() {
   return letters
 }
 
-export function createTiles(newLetters) {
+export function createTiles(newLetters, gameMode) {
+  if (gameMode === Daily) {
+    const currentDate = getDate()
+    let dailyTiles = localStorage.getItem("dailyTiles")
+
+    dailyTiles = dailyTiles ? JSON.parse(dailyTiles) : null
+
+    console.log(dailyTiles)
+
+    if (dailyTiles && currentDate === dailyTiles.date) {
+      return dailyTiles.tiles
+    }
+  }
+
+
   let tempTiles = {}
   newLetters.forEach((letter, i) => {
     tempTiles[i] = {

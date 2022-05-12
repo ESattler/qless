@@ -5,7 +5,7 @@ import GameArea from "../components/GameArea";
 import GithubFooter from "../components/GithubFooter";
 import ToolBarView from "./ToolBarView";
 import GameButtons from "./GameButtons";
-import { Unlimited } from "../constants";
+import { Daily, Unlimited } from "../constants";
 
 
 const GameView = (props) => {
@@ -14,9 +14,29 @@ const GameView = (props) => {
     setTiles({...newPos})
   }, tiles));
 
+  useEffect(() => {
+    // setDifficultyMode("Normal Mode")
+    if (props.mode === Daily && difficultyMode !== "Normal Mode") {
+      setDifficultyMode("Normal Mode")
+    } else {
+      setDifficultyMode(localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" && props.mode === Unlimited ? "Easy Mode" : "Normal Mode" : "Normal Mode")
+    }
+    setTiles(props.tiles)
+  }, [props.tiles, props.mode])
+
+  // // useEffect(() => {
+  // //   console.log("test")
+  //   if (props.mode === Daily) {
+  //     setDifficultyMode("Normal Mode")
+  //   } else {
+  //     setDifficultyMode(localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" && props.mode === Unlimited ? "Easy Mode" : "Normal Mode" : "Normal Mode")
+  //   }
+  // // }, [props.mode])
+
   const [difficultyMode, setDifficultyMode] = useState(localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" && props.mode === Unlimited ? "Easy Mode" : "Normal Mode" : "Normal Mode")
   const [ruleSet, setRuleSet] = useState(localStorage.getItem("officialRules") !== null ? localStorage.getItem("officialRules") === "true" ? "Official Rules" : "Unofficial Rules" : "Unofficial Rules")
 
+  console.log(tiles[0])
 
   return (
     <React.Fragment>
