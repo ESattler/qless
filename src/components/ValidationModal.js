@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import Draggable from "react-draggable";
 import { isMobile } from 'react-device-detect';
-import { Daily } from '../constants';
+import { Daily, Unlimited } from '../constants';
 import { getDate } from '../utils';
 
 function PaperComponent(props) {
@@ -64,7 +64,7 @@ const ValidationModal = (props) => {
         matrix[i] = new Array(8).fill("⬛");
     }
 
-    const difficultyMode = localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" ? "Easy Mode" : "Normal Mode" : "Normal Mode"
+    const difficultyMode = localStorage.getItem("easyMode") !== null ? localStorage.getItem("easyMode") === "true" && props.mode === Unlimited ? "Easy Mode" : "Normal Mode" : "Normal Mode"
     const ruleSet = localStorage.getItem("officialRules") !== null ? localStorage.getItem("officialRules") === "true" ? "Official Rules" : "Unofficial Rules" : "Unofficial Rules"
 
     Object.values(props.tiles).forEach(tile => {
