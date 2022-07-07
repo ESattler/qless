@@ -229,41 +229,41 @@ function generateRandomLetters() {
   return letters
 }
 
-// for (let i = 0; i < 30; i++){
-//   console.log(generateRandomLetters().join(""))
-// }
+for (let i = 0; i < 30; i++){
+  console.log(generateRandomLetters().join(""))
+}
 
 let letters = [
-  "CZLOSTLUHOGD",
-  "TXBITHFORAVG",
-  "DXYITWWINEPR",
-  "TSMIMHLIHAGR",
-  "BBBOMHLINEVG",
-  "CXLOTHLOHOPD",
-  "TSBNCTWARAKD",
-  "DZMOTHFEROGG",
-  "CZLOTTLONOVG",
-  "TKYYTTREHOFG",
-  "CXMIMHFAHAPL",
-  "JZMOSWDUHOFL",
-  "TBMOSPLONOPR",
-  "TKLNTTLEHEGL",
-  "JSBYTTRAREFD",
-  "CXYOSTLUREKG",
-  "TKMOSHWUROPD",
-  "BSBOSTWINAFR",
-  "DZLITPLEREPR",
-  "CZYNCWLINAVG",
-  "JZMOSTLOREPG",
-  "CBBISHFUNEFG",
-  "DZMICPDUREPL",
-  "BZMOTWLOROGG",
-  "TBMNCTWERAPD",
-  "DBMYSHLANAFR",
-  "BXLYCHDUROVR",
-  "JNMICTDUHAVD",
-  "CXLITHRAHOVG",
-  "BXYOSWWORAKR",
+ "BXLOCWDANAGG",
+ "CKMOMPFIROVR",
+ "CSLOCTDUNOGG",
+ "DNYOMTLARAVD",
+ "TNLOTPLUNOGR",
+ "TNLOMTDUNOPD",
+ "CSYOMTFAHOGR",
+ "CNYYTHRUHOFR",
+ "TSBITTLORAPR",
+ "TSMOSTWEROVG",
+ "JZMOTHLONOVL",
+ "JSYOCHRORAPR",
+ "BZMITTFIROVR",
+ "CXMOCHRUHOPL",
+ "BXLNCWDANOKG",
+ "JXMOTHDIREPD",
+ "CSBNTTROREFD",
+ "CSMOTWRURAKR",
+ "TXMOTWLENEGG",
+ "TNLNSHDANOFG",
+ "DZLNCWFANEPG",
+ "TKYOMWRUNEFR",
+ "CSBOTWLAHAPR",
+ "JZYOTTRIHOGG",
+ "JSYITHWUNAGL",
+ "CXMISTWINOGR",
+ "JSLISWFORAPL",
+ "JXBOMTLIRAPG",
+ "TZMYMPLAHOPD",
+ "CZLYTTDONAPL",
 ]
 
 let date = new Date()
@@ -275,7 +275,7 @@ let options = {
 console.log(new Intl.DateTimeFormat('en-US', options).format(date));
 
 let startDate = date
-startDate.setDate(startDate.getDate() + 6)
+startDate.setDate(startDate.getDate() + 3)
 
 let dailyList = {}
 
